@@ -1,0 +1,469 @@
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+
+#LIBRERIAS
+
+import numpy as np
+import matplotlib.pyplot as matplt
+import random as rand
+import scipy.optimize as optim
+import pandas as pd
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+GENERAL
+
+pip install libreria #Descargar librerias
+print() 	#Imprimir
+#       	#Comentarios
+round(x,2)	#Redondear
+pow()		#Elevar
+type(F)		#Tipo de variable
+variable.dtype  #Tipo de variable
+float32_ary = ary2d.astype(np.float32) #Cambiar tipo de variable
+1e-08		#Uso de exponentes
+ary2d.size	#Tamaño
+ary2d.shape 	#El tipo de forma de los datos
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+ARCHIVOS 
+
+
+
+df = pd.read_excel (r'C:\Users\USER\Downloads\4 TAREA\DATOS\MEI.xlsx', sheet_name='Hoja7')
+print (df)
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+VECTORES
+a = (1) # Numero
+a= [1]  #Lista
+
+a = np.array([]) #NUMEROS
+b = np.array([1,1]) #Vectores
+F = np.empty ([2]) #Crear Array vacio
+#Multiplicación
+np.dot()
+
+#Añadir elementos
+X[i,:] = [...]
+X[:,j] = [...]
+
+#Añadir elementos
+i = 1
+for i in range(1,8,1):
+    a = np.append( a, rand.random() )
+    
+print(a)
+
+
+#Sucesion de numeros
+np.arange(4., 10.)
+np.linspace(0., 1., num=5)
+
+np.dot(lst,np.transpose(Theta))
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+DATOS CLASIFICACIÓN
+#Clasificación serie de tiempo segun calidad confiable (1 o 2) y calidad mala (distinta a esta)
+Calidad_Good = Data[(Data['Calidad'] == 1) | (Data['Calidad'] == 2)] #Clasifican según la calidad 
+Calidad_Good.index = pd.to_datetime(Calidad_Good['fecha_hora']) #Dar indices las fechas, de modo que es mas facil grafricar con estos indices
+Calidad_Good = Calidad_Good.drop(['fecha_hora'],axis=1) #Axis=1 significa que borro esa columna, la dropea, la descarta, ya solo tiene las otras columnas
+Calidad_Good = Calidad_Good[['Temperatura']] #Escoge solamente una de las variables
+
+#RELLENO DE DATOS
+
+for i in range(7305, n): # i para las filas, 7305 es desde 1979, para que exista por lo menos un dato
+    
+    aux1 = np.array([]) #Guardan las precipitaciones por fila
+    aux2 = np.array([]) #Para guardar el numero
+    for j in range(1,6): # j para las columnas
+       if  math.isnan(dt.iloc[i,j]) == 0: #evaluo cuales dats tienen nan's, !=  distinto, operador logico
+            aux1 = np.append( aux1, dt.iloc[i,j] ) #solo tomo los valores que  que tenga datos
+            aux2 = np.append( aux2, j-1) #Toma la posición para ubicar en el dataframe de distancias
+    aux3 = np.array([]) #Variable para realizar el IDW
+    aux4 = np.array([]) #Variable para realizar el IDW
+    c = 0 #Para ubicar el aux1, no pregunte eso funciona y sha, haga la prueba
+    for k in range(0,aux2.__len__()): #Longitud de un array con la funcion .__leng__() 
+            aux3 = np.append(aux3,aux1[c]*(pow(distancias.iloc[int(aux2[k]),0],-2)))
+            aux4 = np.append(aux4,pow(distancias.iloc[int(aux2[k]),0],-2))
+            c = c + 1
+    Precipitacion_IDW = np.append(Precipitacion_IDW,sum(aux3)/sum(aux4))
+         
+
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+MATRIZ
+
+lst = [[1, 2, 3], [4, 5, 6]]
+ary2d = np.array(lst)
+ary2d
+
+#Tipos de matrices
+np.ones((3, 3))
+np.zeros((3, 3))
+np.eye(3)
+np.diag((3, 3, 3))
+
+#Operaciones con matrices
+ary + 1
+ary**2
+ary*2
+ary/2
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+OPERACIONES 
+- mean (computes arithmetic average)
+- std (computes the standard deviation)
+- var (computes variance)
+- np.sort (sorts an array)
+- np.argsort (returns indices that would sort an array)
+- np.min (returns the minimum value of an array)
+- np.max (returns the maximum value of an array)
+- np.argmin (returns the index of the minimum value)
+- np.argmax (returns the index of the maximum value)
+- array_equal (checks if two arrays have the same shape and elements)
+- np.random.seed(123)
+  np.random.rand(3)
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+OPERACIONES 
+& y
+|or
+^ xor
+~ Not
+
+ary = np.array([[1, 2, 3], [4, 5, 6]])
+ary[(ary > 3) & (ary % 2 == 0)]
+RESULTADO:   array([4, 6])
+
+np.where(ary > 2, 1, 0) #Poner entradas según los criterios que se tengan
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+FUNCIONES
+
+def funcion_1(z):
+    x = z[0] 
+    y = z[1] 
+    
+    F = x + y
+    return F
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+ALEATORIO Y DISTRIBUCIONES
+
+random.random()
+random.uniform(a, b)
+rand.seed(1) #Valor semilla
+
+https://docs.python.org/3/library/random.html
+
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+DATAFRAMES
+df=pd.DataFrame(np.random.randn(8,3),columns=['A','B','C'])
+df 
+
+d=[{'ciudad':'Medellin','poblacion':3.4},{'ciudad':'Bogota','poblacion':8.5},{'ciudad':'Cali','poblacion':1.5}]
+df=pd.DataFrame(d)
+df
+
+torren.columns #Conocer las columnas
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+TABLAS
+#Organizarlo por Tabla, resumida en Columnas: Hora Filas: Día, en el mes de diciembre
+Table = pd.pivot_table(Temperatura,index=Temperatura.index.day,columns=Temperatura.index.hour) 
+
+#Organizo un vector de datos por cada hora, de forma que me facilite organizar los ciclos diurnos
+Col_0 = Table.iloc[:,0] #Hora 24
+Col_1 = Table.iloc[:,1] #Hora 1
+Col_2 = Table.iloc[:,2] #Hora 2
+
+Ciclo_medio = pd.DataFrame([np.mean(Col_0),np.mean(Col_1),np.mean(Col_2),np.mean(Col_3)],columns = ['MEDIO'])
+
+Ciclo_max = pd.DataFrame([np.max(Col_0),np.max(Col_1),np.max(Col_2),np.max(Col_3)],columns = ['MAX'])
+
+Ciclo_min = pd.DataFrame([np.min(Col_0),np.min(Col_1),np.min(Col_2),np.min(Col_3)],columns = ['MIN'])
+
+
+CICLOS  =pd.concat( [Ciclo_medio,Ciclo_max,Ciclo_min], axis = 1, sort = False)
+CICLOS
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+ESTADISTICOS
+Table.describe() #Table es una variable tipo table
+
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+EXCEL
+#Excel
+xlsx= pd.read_excel('G:\My Drive\ANALISIS ESPACIAL APLICADO\datos\Cuencas_torrencialidad.xlsx', sheet_name='Hoja2')
+print(xlsx.shape)
+xlsx.head(5)
+
+#CSV
+Data = pd.read_csv('estacion_data_temperatura_349__20191201_20191231.csv') #Lectura de datos, debe estar el archivo en la carpeta del script
+Data.head((Data['Calidad']).size)
+
+#Guardar
+writer = pd.ExcelWriter('Temperatura_Confiable.xlsx', engine='xlsxwriter') #Se pasan los datos al excel
+Calidad_Good.to_excel(writer,sheet_name='Sheet1', index=False)
+writer.save() #Para terminar esto se debe cerrar el excle
+
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+CICLOS
+
+for i in range(8,10,1):
+    print(i)
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+GRAFICOS
+
+#GRAFICOS NORMALES
+x = np.linspace(0, 10, 100)
+plt.plot(x, np.sin(x))
+plt.show()
+
+plt.plot(a,b, color = 'blue', linewidth = 3, label = 'linea')
+plt.legend()
+plt.show()
+
+plt.xlim([2, 8])
+plt.ylim([0, 0.75])
+
+plt.xlabel('x-axis')
+plt.ylabel('y-axis')
+
+plt.plot(x, np.sin(x),
+         color='orange',
+         marker='^',
+         linestyle='') #Para el linestyle es sin las lineas
+
+plt.legend(loc='lower left')
+
+# PUNTOS
+rng = np.random.RandomState(123)
+x = rng.normal(size=500)
+y = rng.normal(size=500)
+
+plt.scatter(x, y)
+plt.show()
+
+# HISTOGRAMA
+rng = np.random.RandomState(123)
+x = rng.normal(0, 20, 1000) 
+
+# fixed bin size
+bins = np.arange(-100, 100, 5) # fixed bin size
+
+plt.hist(x, bins=bins)
+plt.show()
+
+
+# SUBPLOTSg
+x = range(11)
+y = range(11)
+
+fig, ax = plt.subplots(nrows=2, ncols=3,
+                       sharex=True, sharey=True)
+
+for row in ax:
+    for col in row:
+        col.plot(x, y)
+        
+plt.show()
+
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+DATOS GEOSPACIALES
+
+from osgeo import gdal
+import pickle
+import openpyxl
+import netCDF4 as nc
+
+driver = gdal.GetDriverByName('GTiff')
+file = gdal.Open('G:\My Drive\ANALISIS ESPACIAL APLICADO\datos\dtm_Arenosa')
+raster = file.GetRasterBand(1)
+dem = raster.ReadAsArray()
+plt.imshow(dem)
+plt.colorbar();
+
+file = gdal.Open(ruta+'\STI.tif')
+raster = file.GetRasterBand(1)
+STI= raster.ReadAsArray()
+STI = np.where(STI==-999,np.nan,STI)
+plt.imshow(STI)
+plt.colorbar();
+STI_vector=STI.ravel() #Para hacerlo vector y manejarlo después como dataframe
+STI_vector_MenM=STI_vector[~np.isnan(STI_vector)]
+STI_vector_MenM.shape
+
+#ASCII
+geologia=np.loadtxt('G:/My Drive/ANALISIS ESPACIAL APLICADO/datos/raster/gamma.asc', skiprows=6)
+geologia=np.where(geologia==-9999.,np.nan,geologia)
+plt.imshow(geologia)
+plt.colorbar();
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+SOLVER
+
+OPCION 1
+#LIBRERIAS 
+
+import numpy as np
+import scipy.optimize as optim
+
+# CREAR FUNCIÓN A OPTIMIZAR
+
+def funcion_1(z):
+    #Crear variables
+    x = z[0] #Variable 
+    y = z[1] #Variable
+    
+    #Especificar numero de funciones
+    F = np.empty ([2])
+    F[0] = y - pow(x,2) + 1
+    F[1] = y - x
+
+    return F #Retornar funciones
+# Crear valor semilla
+
+x0 = np.array([100,100])
+
+# Función óptimo
+
+z = optim.fsolve(funcion_1, x0,  xtol=1e-08)
+print(z)
+
+# Restricciones
+def const1(z):
+    return z[0]*z[1]-25 #Retorna la reestricción
+def const2(z):
+    return z[0]+z[1]-40 #Retorna la reestricción
+
+con1 = {'type':'ineq','fun':const1} #Resumen para la función
+con2 = {'type':'eq','fun':const2}
+const = [con1,con2]
+
+# Restriccion de rango de variables
+b = (0,100)
+bands = (b,b)
+
+# Minimizar
+
+sol = optim.minimize(funcion_1,x0,method='SLSQP',bounds =bnds, constraints = cons,options={'maxiter':100})
+print(sol)
+
+metodos
+Newton-CG
+BFGS
+
+https://docs.scipy.org/doc/scipy-0.18.1/reference/tutorial/optimize.html
+https://www.youtube.com/watch?v=wapP1Dxo0xc
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+
+# Importar las librerías asociadas con cvxpy
+
+from cvxpy import *
+
+# Definición de las variables de decisión
+x1 = Variable()
+x2 = Variable()
+
+# Definición de las restricciones
+rest_primal = [
+6*x1 + 4*x2 <= 24, # primera restricción
+x1 + 2*x2 <= 6, # segunda restricción
+x2 - x1 <= 1, # tercera restricción
+x2 <= 2, # cuarta restricción
+x1 >= 0,
+x2 >= 0
+]
+
+# Definición de la función objetivo
+obj1 = Maximize (5000*x1 + 4000*x2)
+
+# Solución del problema
+prob1 = Problem(obj1, rest_primal)
+prob1.solve()
+
+# Imprimir el estado de las soluciones 
+print ("Estado de la solución: ", prob1.status)
+
+# Imprimir el valor de la función objetivo para la solución óptima
+print ("Obj1: ", obj1.value)
+
+x1T = x1.value
+x2T = x2.value
+
+# Imprimir el valor de las variables para la solución óptima
+print ("Valor óptimo x1: ", x1T)
+print ("Valor óptimo x2: ", x2T)
+
+# Calcular las holguras en el punto óptimo para cada una de las restricciones
+HR1 = 24 - 6*x1T - 4*x2T 
+HR2 = 6 - x1T - 2*x2T 
+HR3 = 1 - x2T + x1T 
+HR4 = 2 - x2T
+
+# Imprimir el valor de las holguras en el punto óptimo para cada una de las restricciones
+print ("Holgura primera restricción: ", HR1)
+print ("Holgura segunda restricción: ", HR2)
+print ("Holgura tercera restricción: ", HR3)
+print ("Holgura cuarta restricción: ", HR4)
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+ECUACIONES
+
+import sympy as sp
+import numpy as np
+
+E = sp.Symbol('E')
+L = sp.Symbol('L')
+E = sp.Symbol('E')
+I = sp.Symbol('I')
+M = sp.Symbol('M')
+W = sp.Symbol('W')
+A = sp.Symbol('A')
+
+kclloc= sp.Matrix([[A*E/L,0,0],[0,12*E*I/L**3,6*E*I/L**2],[0,6*E*I/L**2,4*E*I/L]])
+kclloc
+
+rotacion = sp.Matrix([[sp.cos(sp.pi/2),sp.sin(sp.pi/2),0],[sp.sin(sp.pi/2),sp.cos(sp.pi/2),0],[0,0,1]])
+kc = ko-k1*sp.Matrix.inv(k3)*k2
+val = sp.Matrix.eigenvects(m**-1*kc)
+
+
+##--------------------------------------------------------------------------------------------------------------------------------------##
+##--------------------------------------------------------------------------------------------------------------------------------------##
+
+CODIGOS UTILES
+
+PASS
+
+	pass #No pasa nada, solo se usa como para pasar una función y que no genere error
+
+NONLOCAL
+	nonlocal x
+	n = 5 #Toma el valor el global de una variable y la redefine
+
+ASSERT
+	assert edad >= 18 #Testea condicion y expulsa mensaje de error si es falso, si no no

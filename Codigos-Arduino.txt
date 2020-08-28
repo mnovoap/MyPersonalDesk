@@ -1,0 +1,595 @@
+OBJETIVO:
+
+APRENDER A MEDIR CAUDALES EN SECTORES CON UN ARDUINO
+TENER UN PROCESO AUTOMATICO EN EL DÍA A DÍA
+
+ARDUINO QUE GUARDA LOS DATOS EN UNA SD
+
+Llamadas al celular
+
+https://www.tinkercad.com/things/8OA7buXD8hk-exquisite-sango/editel?tenant=circuits
+https://www.tinkercad.com/circuits (contraseña MeencantaIO1!-mnovoap@unal..)
+
+https://learn.adafruit.com/wave-shield-voice-changer/overview
+
+https://www.instructables.com/member/acur97/ #Urris
+#----------------------------------------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------#
+
+ESTRUCTURA
+
+// comentarios en arduino
+Variables a usar #Se declaran antes
+void setup() #Solo se corre una vez cada vez que se enciende, pin, variables, librerias,etc.
+void loop() #Control del arduino
+
+{} # estructura para abrir y cerrar
+
+() #Algunos comandos no necesitan tener entradas, pero deben estar vacios 
+
+; #Para terminar cada comando
+
+\t #Para poner tabulación en el arduino
+
+brightness = brightness + fadeAmount; #Aumentar y desaumentar un valor
+if (brightness == 0 || brightness == 255) 
+ {
+
+fadeAmount = -fadeAmount ;
+
+ }  
+
+7 % 5 = 2 
+5 % 5 = 0
+
+int x (x=2.5) entonces x=2 #Cambiar enteros
+
+
+union temporal viva medellin sede prado
+604 22 20
+#----------------------------------------------------------------------------------------------------------------#
+int #entero 2^31
+const #Variable que nunca va a cambiar su valor
+String #String
+char #string por numeros
+byte #numero de 0-255
+long #numero -2 147 483 647 a 2 147 483 647
+word #numero 0 a 65535
+float #numero con un decimal, necesario hacer los calculos con numero 0.0, indicando decimal
+bool #Booleano 
+File #Archivos
+unsigned long #Numero sin signo, así tiene mas digitos
+#----------------------------------------------------------------------------------------------------------------#
+Vectores:
+int myArray[10]={9,3,2,4,3,2,7,8,9,11}; #Cuenta desde 0 
+#----------------------------------------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------#
+IF Y ELSE
+
+#Realizar un unico if
+if (x == y (x is equal to y)
+x != y (x is not equal to y)
+x <  y (x is less than y)
+x >  y (x is greater than y)
+x <= y (x is less than or equal to y)
+x >= y (x is greater than or equal to y)) {
+}
+
+#If y else
+if(){
+}else if(){
+}else(){
+}
+#----------------------------------------------------------------------------------------------------------------#
+FOR
+
+for (initialization (int i=0); condition(i <= 255); increment(i++,i=i+1,i--)) {
+	//statement(s);
+}
+
+#----------------------------------------------------------------------------------------------------------------#
+WHILE
+
+while(condition){
+  // statement(s)
+}
+#----------------------------------------------------------------------------------------------------------------#
+FUNCIONES
+
+int myMultiplyFunction(int x, int y){ #Funciones que arrojan resultados
+  int result;
+  result = x * y;
+  return result;
+}
+
+void turnOn(int x){   #Funciones que no arrojan nada
+   shiftOut(ds, shcp, MSBFIRST, x);  
+   digitalWrite(stcp, HIGH);
+}
+
+
+void turnOff(){ #Se debe declarar en el set up, como turnOff();
+  digitalWrite(stcp, LOW);
+}
+#----------------------------------------------------------------------------------------------------------------#
+NUMEROS A BITS
+bitWrite(x,7,HIGH)
+
+#----------------------------------------------------------------------------------------------------------------#
+DO. WHILE
+
+do
+{
+  delay(50);          // wait for sensors to stabilize
+  x = readSensors();  // check the sensors
+
+} while (x < 100);
+#----------------------------------------------------------------------------------------------------------------#
+BREAK
+
+break; #Se usa para salir, solo se poner break;
+
+#----------------------------------------------------------------------------------------------------------------#
+
+RETURN
+
+return;
+
+return value; // both forms are valid
+
+return 0;
+#----------------------------------------------------------------------------------------------------------------#
+
+GOTO
+
+label:
+
+goto label; // sends program flow to the label
+#----------------------------------------------------------------------------------------------------------------#
+LIBRERIAS
+
+#include <SD.h>
+
+#----------------------------------------------------------------------------------------------------------------#
+BYTES ARRREGLOS
+
+https://ascii.cl/es/conversion.htm
+https://es.calcuworld.com/calculadoras-matematicas/calculadora-binaria/
+
+#----------------------------------------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------#
+Voltaje: Es la diferencia de la energia
+Corriente: Es la cantidad de energia transportada
+Resistencia: La fricción de paso en esa energia.
+
+#----------------------------------------------------------------------------------------------------------------#
+Circuitos y Protoboard:
+cerrados, debe existir una ruta completa desde la energia a la tierra.
+toda la corriente es agotada en sus componentes y busca el de menor resistencia
+
+La parte interior es comunicada de columna y las exteriores en fila, las exteriores
+se usan para GND
+
+Necesita una corriente y luego una tierra.
+
+Siguen la ley de ohm
+
+Los interruptores, continuan o cierran el flujo
+
+#----------------------------------------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------#
+
+COMUNICACIÓN CON ARDUINO
+
+#Se necesita tener una comunicación con el arduino, para observar las variables.
+Para ello es el monitor serie, o herramientas->serial plotter. El uno solo permite
+una comunicación, el leonardo permite dos
+
+Serial.begin(9600); #Este tiene la tasa de baudio, se estabiliza con el tiempo
+Serial.print #Comunicación horizontal
+Serial.println #Comunicación vertical
+Serial.write()#Escribe cosas
+delay() #En milisegundos, para permitir que no imprima muchos datos
+
+
+La forma de arduino 
+
+
+delay(ms); #Numero de segundos de retraso
+ms: the number of milliseconds to pause (unsigned long)
+
+
+millis() #Returns the number of milliseconds since the Arduino board began running the current program. 
+          This number will overflow (go back to zero), after approximately 50 days.
+
+#----------------------------------------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------#
+
+LEY DE OHM
+
+V=I*R v[Voltios] I [Amperios] R [ohminios] #Convertir amperios a miliamperios.
+
+Every electrical circuit, no matter what size or complexity, deals with a current of electrons that is flowing 
+in a loop. The magnitude or intensity of this electric current (I) is measured with the unit Ampères (A). (Note that 
+there is a symbol for the quantity, I, and a separate symbol for the units, A)
+
+To make electrons circulate through a circuit, you need a "driving force". In electricity, this force 
+is called voltage (V). The voltage is measured and expressed in Volts (V). (In this case, the quantity 
+and the unit happen to have the same symbol!) 
+
+To visualise the difference between current and voltage, we can use an analogy of flowing water. The current 
+of an electric circuit is like the quantity of water in a pipe. The voltage is like the water pressure. 
+For a given pipe, the higher the pressure, the greater the flow of the water. Electricity is similar: the 
+more the voltage increases, the greater the energy being delivered.
+#----------------------------------------------------------------------------------------------------------------#
+
+FUENTES:
+
+VOLTAJE: Se suma en serie (conectar positivo con negativo del anterior)
+AMPERAJE: Se suma en paralelo
+RESISTENCIA: Debe tener comida el voltaje que falta
+
+
+Se conecta en el pin: Vin, debajo del pin de 5v. Es necesario al menos 6v (y menos de 12v)
+https://www.geekfactory.mx/tutoriales/tutoriales-arduino/alimentar-el-arduino-la-guia-definitiva/#
+
+https://www.youtube.com/watch?v=V8Zhx2jnQEk
+
+#Las pilas se toman como voltaje continuo
+#Las pilas se van consumiendo el voltaje en la vida util
+#El amperaje es por hora
+PC: 100-150 mAh Proporciona
+PILA: 2550-3000 mAh
+
+Positivo con Positivo, Negativo con Negativo. (Tanto para la conexion de tierra y voltaje, como para ponerlo en serie)
+LED: Necesita 20mA 
+http://led.linear1.org/led.wiz
+
+https://www.youtube.com/watch?v=tAU8alULTMg
+
+Se pueden hacer extensiones con cargadores de celulares. 
+Recomendable que sea con 6.5v-7v y 500 mAh de salida
+
+//AC - DC
+
+AC : Corriente alterna, cambia polaridad constantemente.
+
+DC: Corriente directa, polaridad unica, usada en electronica.
+
+#----------------------------------------------------------------------------------------------------------------#
+SOLDAR PLACAS
+
+https://www.youtube.com/watch?v=76HZxhhpZbQ&feature=youtu.be
+
+
+#----------------------------------------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------#
+ANALOGICO: 
+Continuo en el tiempo, se puede tener distintos voltajes para su realización.
+
+Solo puede entregar  5v.
+Sensores: 5 v, 3.3 v, 1.1 v
+Maximo de datos: 1023 
+Necesario: Divir la cantidad de datos en el voltaje que se tiene
+Relacion sensores LM35 datasheet
+
+INPUT: Datos entrada al arduino.
+OUTPUT: Datos de salida en el arduino.
+
+
+Tienen 3 entradas:
+1-el primero del voltaje 
+2-output al arduino
+3-el tercero de tierra
+
+analogRead(A0) #Para la entrada de los analogos
+analogWrite(ledPin, val / 4);  // analogRead values go from 0 to 1023, analogWrite values from 0 to 255 #Dar valores
+outputValor = map(sensorTieneInformacion,0,1023,0,255) #Escalarlo con una funcion
+outputvalor = SensorValor*255/1024
+#----------------------------------------------------------------------------------------------------------------#
+DIGITAL: 
+
+Solo tiene realización de 0 y 1. On/Off
+
+Los PWN, son aquellos que modulan el voltaje en un periodo fijo
+
+digitalRead(pin);
+digitalWrite(pin);
+
+Cuando se quiere extraer información al arduino, se debe conectar el pin a Digital, justo cuando va a
+entrar a tierra
+#----------------------------------------------------------------------------------------------------------------#
+SD
+File myFile;
+
+SD.begin(cspin);# Inicializa la biblioteca SD y la tarjeta, como parámetro se le indica el pin CS al que 
+está conectado el modulo.
+
+myFile = SD.open("archivo.txt", FILE_WRITE o FILE_READ); #Crear o abrir archivos txt
+
+file.available()#Compruebe si hay bytes disponibles para leer en el archivo y retorna el número de bytes disponibles
+
+file.read() #Lee un byte de la variable File (archivo abierto anteriormente con SD.open())
+
+file.write(data) #Escribe un byte en el archivo, el archivo debe estar abierto en modo lectura y escritura. 
+Usando file.write(buf, len) se puede escribir un array de byte (buf) pero se debe especificar el tamaño (len).
+file.close() #Cerramos el archivo, y recién en este momento los datos se guardan en la SD, 
+pudiendo extraer de forma segura nuestra SD.
+ 
+
+void setup()
+{
+  Serial.begin(9600);
+  Serial.print("Iniciando SD ...");
+  if (!SD.begin(4)) {
+    Serial.println("No se pudo inicializar");
+    return;
+  }
+  Serial.println("inicializacion exitosa");
+ 
+  myFile = SD.open("archivo.txt");//abrimos  el archivo 
+  if (myFile) {
+    Serial.println("archivo.txt:");
+    while (myFile.available()) {
+    	Serial.write(myFile.read());
+    }
+    myFile.close(); //cerramos el archivo
+  } else {
+    Serial.println("Error al abrir el archivo");
+  }
+}
+
+void loop()
+{
+  
+}
+
+#----------------------------------------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------#
+TEMPERATURA:
+
+Desde la cara plana: Arriba la entrada de 5v, Media entrada analogica y Abajo GND
+temp36
+
+#----------------------------------------------------------------------------------------------------------------#
+PIN
+
+
+pinMode(n,OUTPUT o INPUT O INPUT_PULLUP) 
+void setup()
+{
+  pinMode(13, OUTPUT);          // sets the digital pin 13 as output
+}
+
+void loop()
+{
+  digitalWrite(13, HIGH);       // sets the digital pin 13 on
+  delay(1000);                  // waits for a second
+  digitalWrite(13, LOW);        // sets the digital pin 13 off
+  delay(1000);                  // waits for a second
+}
+
+HIGH=1 Encendido o tiene voltaje
+LOW=0 Apagado
+#----------------------------------------------------------------------------------------------------------------#
+LED
+
+Se tiene la pata larga como positivo, además de llevar la resistencia por esa zona
+y la pata corta, como el negativo.
+
+LED_BUILTIN #Es el LED que viene con Arduino, en el pin 13
+
+#----------------------------------------------------------------------------------------------------------------#
+CONDENSADOR
+
+Ayuda para el ruido que se puede generar, de forma que no hay negativos en el ruido, solo positivo
+el negro hacia arriba marca el negativo, al igual que un led.
+
+#----------------------------------------------------------------------------------------------------------------#
+POTENCIOMETRO
+Aumenta resistencia de 1 hasta 100 kOhm
+Valores de 0-1023
+arriba (las dos patas a la izquierda) es -
+abajo es +
+
+#----------------------------------------------------------------------------------------------------------------#
+SENSOR ULTRASONICO
+
+Hasta 4 m y un angulo de 30°.
+
+
+Echo: Arduino, envia información.  Pines digitales INPUT
+Trig: Controla el sensor, del arduino al sensor. Pines digitales OUTPUT
+
+digitalWrite(trig,LOW);
+delayMicroseconds(4); #Dispara información
+digitalWrite(trig,HIGH); #Recibe información
+delay(100);
+digitalWrite(trig,LOW); #Apaga de nuevo
+
+
+duracion = float(pulseIn(Echo,High)); #Hasta recibir información, en microsegundos
+duracionobj = duracion/2; #distancia final
+ 
+dis = (vs*duracionobj*1e-4);
+vs=331.4+0.61·t
+
+Serial.println(dis);
+
+delay(50);
+
+#----------------------------------------------------------------------------------------------------------------#
+
+BOTON
+
+int myButton = 2; // button on pin 2
+int counter = 0;  // counter
+int buttonState; // state of the button
+int memory = LOW; // la memoria ayuda a detectar el cambio de estado, y no contar sino una vez
+
+void setup() {
+  // initialize button
+  pinMode(myButton, INPUT);
+  Serial.begin(9600); 
+}
+
+void loop()
+{
+    // read state of button
+    buttonState = digitalRead(myButton);
+
+    // if the button now has a different state from the memory, AND
+    // the current state is "HIGH"
+    if((buttonState != memory) && (buttonState == HIGH))
+    {
+        // we increment the counter
+        counter++;
+    }
+
+    // record the state of the button into 'memory' for the next time the loop runs
+    memory = buttonState; #Ayuda a entrar solo una vez para el conteo
+    Serial.println(counter);
+}
+
+#----------------------------------------------------------------------------------------------------------------#
+SERVO MOTOR
+Es necesario poner el blanco con un pin digital, PWN
+
+#include <Servo.h>
+
+Servo myServo; #Nombrar el motor
+
+myServo.attach(motor); #Arrancar motor al inicio, en el pin 9 o 10
+
+ang = map(potVal, 0, 1023, 0 , 179); #Escala valores en el servo
+myServo.write(ang); #Da valores al servo
+
+
+#----------------------------------------------------------------------------------------------------------------#
+PIEZO (BUZZ)
+No importa el orden que se ponga
+
+tone(pin,frecuencia,tiempo en milisegundos);
+delay(600); importante para la frecuencia que se hace
+noTone(pin); #No da tono
+
+#----------------------------------------------------------------------------------------------------------------#
+TRANSISTOR
+
+Sirve como regulador de corriente, este dependiendo del voltaje en la base
+
+
+Arriba: colector (recibe carga)
+Central: Base (controla, segun el voltaje de la base, se pasa, con el pin PWM)
+Abajo: emisor (transmite)
+
+https://www.youtube.com/watch?v=crrbujSEjBE
+
+#----------------------------------------------------------------------------------------------------------------#
+DIODO
+
+Permite que cualquier corriente no vuelva al motor, restringe el flujo en un sentido
+
+#----------------------------------------------------------------------------------------------------------------#
+REGISTRO DE DESPLAZAMIENTO 74HC595
+
+Esta conformado por 8 pines de entrada para cada mandar información, esta se hace pasando los bits de entrada a ellos.
+Marca es la que queda arriba
+
+El pin 10 y 16, tienen que ir a voltaje.
+El pin 8 y 13, tienen que ir a tierra
+El pin 11 es SH ClockPin
+El pin 12 es St LatchPin
+El pin 14 es Data
+
+//DECLARACION DE LOS PINES DEL CI
+
+ pinMode(latchPin, OUTPUT);
+ pinMode(clockPin, OUTPUT);
+ pinMode(dataPin, OUTPUT);
+
+//ORDEN GENERAL
+
+shiftOut(ds, shcp, MSBFIRST, x);  #Ordenar que se debe hacer, si se ponen mas, solo va ordenarse el ultimo comadno
+digitalWrite(stcp, HIGH); #Prender la orden
+digitalWrite(stcp, LOW); #Apagar señal
+
+La palabra reservada MSBFIRST indica el orden de los bits para ser usados 
+con el método shiftOut o shiftIn. Indica el bit más significante primero (el bit ubicado más a la izquierda (primero al ultimo) ).
+La palabra reservada LSBFIRST indica el orden de los bits para ser usados 
+por el método shiftOut o shiftIn. Indica el bit menos significante primero (el bit ubicado más a la derecha (ultimo al primero)).
+
+x =  B10000001 #Con la entrada de los 1, en los lugares donde se quiera encender
+bitWrite(x,pin,HIGH);
+X= PUEDE SER DEL 1 HASTA EL 255
+
+https://es.calcuworld.com/calculadoras-matematicas/calculadora-binaria/
+
+#Recomendación para impulsos
+void turnOn(int x){   
+   shiftOut(ds, shcp, MSBFIRST, x);  
+   digitalWrite(stcp, HIGH);
+}
+
+void turnOff(){
+  digitalWrite(stcp, LOW);
+}
+
+EL TRUCO ES PONER FUNCIONES EN CADA ANIMACION
+
+
+//FUENTE
+
+Los Leds tienen de esta forma una independencia
+Las calcula a cada uno independiente, ud debe saber el voltaje de cada led y 
+q esta aplicando a cada uno, saca la diferencia y eso debe ser el voltaje q la 
+resistencia debe aguantar y con la corriente saca el valor
+la corriente, se supone como la corriente que se necesita para que ilumine
+
+//Conectar más de uno
+
+Se hace conectando: Data con Q7' (9) El que se conecta de segundo, es el primero en mandar las ordenes
+Clock con un nivel por debajo del otro clock El que se conecta de segundo, es el primero en mandar las ordenes
+Latch con un nivel por debajo del otro latch El que se conecta de segundo, es el primero en mandar las ordenes
+
+
+//Dos ordenes o mas
+shiftOut (ds, shcp, MSBFIRST, B00000000); #Se pone las ordenes y en el orden que se necesitan
+shiftOut (ds, shcp, MSBFIRST, B00000000);
+digitalWrite(stcp, HIGH); #Prender la orden
+digitalWrite(stcp, LOW); #Apagar señal
+
+
+#----------------------------------------------------------------------------------------------------------------#
+ULN2803A
+Es un transistor, que aumenta la corriente.
+
+En este se puede amplificar el amperaje, de 20 mA (arduino uno), hasta la salida de cada uno de 500mA
+
+Si el pin digital del Arduino es Alto (5 V), la corriente fluirá a través del circuito y el motor funcionará. 
+Si el pin digital es Bajo (0 V), la conexión a GND estará desactivada y no circulará corriente por el circuito.
+
+https://techtutorialsx.com/2016/02/08/using-a-uln2803a-to-control-a-dc-motor/
+https://www.inventable.eu/2018/02/09/uln2003-driver-salida-microcontroladores/
+
+
+//Conexiones
+Tierra 9
+voltaje 10
+Izquierda Conecta a los negativos de los leds
+Derecha se conecta con el arduino, esto se hace de igual forma que el otro
+
+
+//Se acomadon como pines digitales en el arduino, cada salida al arduino.
+int neg_uno = 8;
+int neg_dos = 9;
+
+
+//Aqui se ajusta los pines como output
+pinMode(neg_uno, OUTPUT);
+pinMode(neg_dos, OUTPUT);
+
+//Se prenden o apaga como se guste
+digitalWrite(neg_uno,HIGH);
+digitalWrite(neg_dos,HIGH);
+
