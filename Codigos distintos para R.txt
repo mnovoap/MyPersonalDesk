@@ -1,0 +1,1265 @@
+LIBRERIAS:
+forecast #Parte inicial Estadistica 3
+dplyr #Para el manejo de datos
+rafalib #Para la estadistica inferencial
+downloader #Bajar csv, de internet
+swirl (esta permite ayudar en la sintaxis de r, es un tipo de tutorial)
+if(!require(fANCOVA)) install.packages("fANCOVA")
+if(!require(forecast)) install.packages("forecast")
+if(!require(TSA)) install.packages("TSA")
+if(!require(car)) install.packages("car")
+if(!require(FitAR)) install.packages("FitAR")
+if(!require(lmtest)) install.packages("lmtest")
+if(!require(timsac)) install.packages("timsac")
+if(!require(pdR)) install.packages("pdR")
+if(!require(strucchange)) install.packages("strucchange")
+if(!require(rafalib)) install.packages("rafalib")
+
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+BASICO:
+yt=
+variables
+x=87 ; x<-87 ; t=1:x 
+#para mostrar hay que poner la variable otra vez  y correr
+x
+Correr lineas: ctrl+r
+NA no hay valores
+#Vectores
+c(,,) o cbind() #Este cbind es para datos
+<= < > >= != == | &
+%% 1 si tiene residuo, 0 si no
+ my_data <- sample(c(y, z), 100) #seleccionar elementos de un vector y 
+#Matrices
+
+matrix(data,nrow=filas,ncol=columnas)
+
+
+#Datos de txt
+caudales=ts(scan(file.choose()),freq=12,start=c(1973,1))
+				 unir
+is.na() #contar NA, es los no disponibles o perdidos
+na.omit( dat ) #Omitir NA'S
+sum(d) #contar cosas
+paste(my_char, collapse = " ") #unir
+mean() #media
+cars[,2]
+
+#Adicionar vector nulo
+X[i]
+
+#Cambiar valores 
+x [x == 1] = 0  #Cambia los valores dentro de una matriz o vector a un valor determinado
+
+
+#Consejos inicios
+datos$Bodyweight (extrae columnas como vector o información de la función)
+datos<-read.csv(file.choose())
+class(tipo de file)
+
+#Descargar archivos web
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/babies.txt"
+filename <- basename(url)
+download(url, destfile=filename)
+babies <- read.table("babies.txt", header=TRUE)
+
+#DATAFRAME
+nuevas.filas = data.frame ( Sexo = c("Hombre","Hombre"),Edad = c(18,18),Hermanos=c(1,2))
+cbind (data.frame,nueva.filas) #adicionar filas
+rbind (data.frame,nueva.filas) #adicionar variables 
+data.frame$variablenueva = data.frame$variablevieja1*data.frame$variablevieja2
+names(DATAFRAME) = c("DistanciaX (m)","Profundidad (m)","AlturaOla (m)",
+                            "CriterioAsomeramiento1","Ir","HRoturaGoda (m)",
+                            "HRoturaMc1 (m)","HRoturaMc2 (m)")
+#plot
+
+plot(Q,type="p ó l ó b",main="RIO NARE",sub="SERIE DE TIEMPO",xlab="Realización con medición mensual",ylab="Caudal (m3/s)")
+abline(mean(datos),b=0)
+
+#Plotear muchas graficas
+win.graph(height=7,width=14) #Graficos adjuntar varios en una imre
+layout(rbind(c(1,2),c(3,4)))
+
+#Graficar puntos y lineas al mismo tiempo
+plot(x,y)
+lines(x,y)#Para poner puntos y linea a la vez
+
+#Lineas inf
+
+abline(v=c()) #Vertical
+
+abline(h=c()) #Horizontal
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Integrales
+library(pROCv1)
+library(DescTools)
+AUC(tiempo,cero)
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Descargar datos
+
+library(downloader) 
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/mice_pheno.csv"
+filename <- basename(url)
+download(url, destfile=filename)
+dat <- read.csv(filename) 
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Pasar datos a excel
+
+write.csv(data.frame(Supf_trig_pred), file="PREDICCIONES.csv")
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+DISTRIBUCIONES
+if(!require(extraDistr)) install.packages("extraDistr")
+library(extraDistr)
+
+GENERAL
+	d evaluar la probabilidad
+	p evaluar probabilidad acumulada
+	q hallar el cuantil
+	r numeros aleatorios
+
+AYUDA: 
+	help(distributions)
+
+EJEMPLO Uniforme: 
+	paquete: "extraDistr"
+	ddunif(x, i1, i2 ) #i1 valor inicial del soporte i2 valor final del soporte, x el valor de la probabilidad que se requiere
+	pdunif #Funcion acumulada CFD FDA
+	qdunir #Hallar el cuantil de p probabilidad
+	rdunif #Conjunto de valores aleatorios
+
+
+beta distribution see dbeta.
+
+binomial (including Bernoulli) see dbinom.
+
+Cauchy see dcauchy.
+
+chi-squared distribution see dchisq.
+
+exponential distribution see dexp.
+
+F distribution see df.
+
+gamma distribution see dgamma.
+
+geometric distribution see dgeom. (This is also a special case of the negative binomial.)
+
+hypergeometric distribution see dhyper.
+
+log-normal distribution see dlnorm.
+
+multinomial distribution see dmultinom.
+
+negative binomial distribution see dnbinom.
+
+normal distribution see dnorm.
+
+Poisson distribution see dpois.
+
+Student's t distribution see dt.
+
+uniform distribution see dunif.
+
+Weibull distribution see dweibull.
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+MONTE CARLO SIMULACION
+
+Montecarlo <- function (n) {
+y = sample(controlPopulation,n) #Muestras aleatorias
+x = y/8 #Estadisticoa simular
+return (x) 
+}
+
+#Se replica, simulación montecarlo
+ttests <- replicate(1000, Montecarlo (10))
+
+#Se compara con todo el que se quiere,este caso estadistico t
+ps <- (seq(0,999)+0.5)/1000
+qqplot(qt(ps,df=2*3-2),ttests,xlim=c(-6,6),ylim=c(-6,6))
+abline(0,1)
+
+ttestgenerator <- function(n) {
+  #note that here we have a false "high fat" group where we actually
+  #sample from the nonsmokers. this is because we are modeling the *null*
+  cases <- sample(controlPopulation,n)
+  controls <- sample(controlPopulation,n)
+  #Estadistico a simular
+  tstat <- (mean(cases)-mean(controls)) / 
+    sqrt( var(cases)/n + var(controls)/n ) 
+  return(tstat)
+}
+
+
+#Se replica, simulación montecarlo
+ttests <- replicate(1000, ttestgenerator(10))
+
+#Se compara con todo el que se quiere, que es el estadistico t
+ps <- (seq(0,999)+0.5)/1000
+qqplot(qt(ps,df=2*3-2),ttests,xlim=c(-6,6),ylim=c(-6,6))
+abline(0,1)
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+SIMULACION PARAMETRICA
+
+#Se sabe a priori que distribución lleva (normal)
+
+#Se extrae numeros con la media de la muestra y desviacion de la muestra
+controls<- rnorm(5000, mean=24, sd=3.5) 
+
+#Se genera una función para replicar el estadistico que se quiere
+ttestgenerator <- function(n, mean=24, sd=3.5) {
+  cases <- rnorm(n,mean,sd)
+  controls <- rnorm(n,mean,sd)
+  tstat <- (mean(cases)-mean(controls)) / 
+    sqrt( var(cases)/n + var(controls)/n ) 
+  return(tstat)
+}
+
+qqnorm(ttest)
+abline(0,1)
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+FECHAS
+
+Sys.Date() #Fecha sistema
+as.date() #Organizar cualquier formato a tipo fecha, con año, mes y día
+
+Ejemplo
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y") 
+
+%d 	day as a number (0-31) 	01-31
+
+%a	abbreviated weekday	Mon
+%A 	unabbreviated weekday	Monday
+ 	
+%m 	month (00-12)		00-12	
+%b	abbreviated month	Jan
+%B 	unabbreviated month 	January
+	
+%y	2-digit year		07
+%Y 	4-digit year		2007
+ 	
+
+
+
+format.Date(as.Date(aux), "%m") #Extraer los meses
+format.Date(as.Date(aux), "%Y") #Extraer los años
+as.numeric(format.Date(as.Date(aux), "%m")) #Extraer meses tipo numerico
+as.numeric(format.Date(as.Date(aux), "%Y")) #Extraer años tipo numerico
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+AGREGAR DATOS
+
+Función aggregate
+
+#Filtrar datos desde el IDEAM
+Qmed <- filter(data, 1997 <= as.numeric(format.Date(as.Date(data$Fecha,"%Y"), "%Y")) & 2011 >= as.numeric(format.Date(as.Date(data$Fecha,"%Y"), "%Y")))  %>% filter(IdParametro == "CAUDAL") %>% select( Fecha, Valor )  
+
+#Poner formato fecha los caudales
+Qmed$Fecha <- as.Date(Qmed$Fecha)
+
+#Crear columna de meses
+Qmed$Month <- months(Qmed$Fecha)
+
+#Crear columna de años
+Qmed$Year <- format(Qmed$Fecha,format="%y")
+
+#Agregar el data frame en los meses (también se puede adicionar Month + Year), en el valor Qmed y su media
+aggregate( Valor ~ Month  , Qmed , mean )
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Simulación en R
+#Numeros aleatorios
+ sample(1:6, 4, replace = TRUE) #numeros aleatorios
+ LEETERS #Letras del alfabeto
+
+ sample(c(0,1),100,replace=1,prob=c(0.3,0.7)) #Asi se adquiere una probabilidad dada
+ rbinom(1, size = 100, prob = 0.7)
+ replicate(100,rpois(5,10)) #created a matrix, each column of which contains 5 random numbers
+ colmean()
+ hist()
+
+#Distribucion normal
+dnorm(x, mean = 0, sd = 1, log = FALSE)
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) #Probabilidades
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) #Cuantiles, da el valor de z
+rnorm(n, mean = 0, sd = 1)
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Chi-cuadrado
+
+d<- read.csv(choose.files()) #assoctest
+td<-table(d)
+#Esto porque se deben hacer con dataframe
+
+chisq.test(td)   #Se hace para distintas tablas, pero es sensible a rechazar con tamaños muestrales grandes
+fisher.test(td)  #Se hace con solo dos grupos, y en proporciones más grandes es mejor,  se basa en la distribución hipergeométrica. sta distribución es la 
+que sigue una situación en la que hay N de posibles observaciones, distribuida en dos tipos distintos, en proporción r y N-r y donde realizaremos n observaciones 
+sin repetición 
+
+
+H0 (hipótesis nula): Las dos variables cualitativas son independientes. En nuestro ejemplo, esto significaría que la presencia / ausencia de los gusanos es independiente de la variedad de plátano. En otras palabras, la relación de los plátanos habitados es la misma en las tres variedades.
+A continuación se muestra una proposición de una hipótesis alternativa (dos colas):
+Ha (hipótesis alternativa): Las dos variables cualitativas dependen una de la otra. En nuestro ejemplo, esto significaría que la presencia / ausencia de larvas depende de la variedad de plátano. En otras palabras, al menos una de las tres variedades de plátano tiene una ratio de presencia de gusanos que es diferente de la ratio de las otras variedades.
+La diferencia entre las dos pruebas radica en la forma en que se calcula el valor de p.
+https://www.youtube.com/watch?v=Vzqha_RO4ZY
+#Se puede seguir unos patrones esperados de la proporción con esta herramienta. 
+#No es una relación 1:1, mientras crece el tamaño de la muestra influye y disminuye la variabilidad
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Swirl
+
+Entrar: swirl()
+Salir: esc ó bye()
+Menu: main()
+Opciones: info()
+Ignorar: play()
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+dplyr
+
+filter(x,nombre de la columna=="nombre de los datos a filtrar (datos  queridos) ")
+select(x, Columna escogida, Columna escogida 2, ...) #Sin comillas, se puede usar normal
+unlist(x) #Hace que sea un vector y no una lista
+
+%>% #hace que sea un espacio y se pueda copiar todo en una misma linea #Necesita la libreria
+control<-filter(datos,Diet=="chow") %>% select(Bodyweight) %>% unlist #Se ahorra mencionar a la variable
+
+aux = subset (dataframe,dataframe$MINUTO>0 & dataframe$MINUTO<=17)
+dat_p1 <- subset(dat,(dat$minac>=0 & dat$minac<=17)| (dat$minac>=30 & dat$minac<=47))
+
+IngresosM <- filter(dat,Sexo == "Masculino") %>% select(Ingresos)  %>% unlist(use.names = 0)
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+IMAGENES
+
+Librerias:
+	RASTER #Manipula raster para GIS
+	SP #Manipula vector GIS	
+	RGDAL #Crea la intefaz en R
+  
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+ESTADISTICA DESCRIPTIVA
+
+Datos 
+dat <- read.csv(choose.files(),header=TRUE) #Datos en tipo dataframe
+
+BOXPLOT
+boxplot(X1,X2 ,col=c("#C51D34","#35682d"),xlab="SEXO",ylab="INGRESOS",
+        main="DIAGRAMAS DE CAJAS",ylim=c(0,3e6),names = c("MASCULINO", 
+	"FEMENINO"),notch=TRUE) #X1, X2.. Xn son vectores; notch es para tener una forma distinta en esos boxplot
+
+DIAGRAMA DE BARRAS
+barplot(table(dat$Fondo.pension,dat$Sexo),legend.text=TRUE, legend = "topleft", beside = TRUE,
+        ylab = "Numero de personas", main = "COTIZANDO A PENSION SEGUN EL SEXO",
+        col=c("#C51D34","#35682d","#2d3356"),ylim = c(0,1200)) #El col puede usar cualquiera, buscarlo por codigos
+
+NOTA: La forma de usar esto es con formato table, que lo mejor es extraer los datos como data frame, y filtrarlos como dat$Variable, y luego el comando table, este
+Es capaz de organizar los datos y ya permita usar el barplot.
+
+CLASES 
+#Clases definidas para los salarios, se hace según el criterio de sturges y debe definirse
+Secuencia = seq(min(dat$Ingresos),max(dat$Ingresos),
+    length=nclass.Sturges(table(dat$Ingresos,dat$Sexo)))
+ 
+#Cut realiza que se cuente según los intervalos
+HInt = cut((IngresosM),breaks=Secuencia,include.lowest=TRUE,rigth = TRUE , 
+           labels = c("[250 000 - 2 469 091]","[2 469 091 - 4 688 182)","[4 688 182 - 6 907 273)",
+                      "[6 907 273 - 9 126 364)","[9 126 364 - 11 345 455)" ,"[11 345 455 - 13 564 545)",
+                      "[13 564 545 - 15 783 636)", "[15 783 636 - 18 002 727)", "[18 002 727 - 20 221 818)",
+                      "[20 221 818 - 22 440 909)","[22 440 909 24 660 000]")) 
+#Break = Contar segun los intervalos
+#include.lowest = Cerrado en el primer intervalo
+#Right = True; para que se cuente así [) [)
+#X, variable tipo vector
+#Hay que incluir el label, o si no lo saca por defecto
+
+#Se realiza para que quede como variable tabla
+HTabla = table(HInt)
+FTabla = table(FInt)
+
+#Ahora en formato data frame, para tener una mejor visualización de los datos
+TablaSalarios <- data.frame(FTabla, HTabla)
+TablaSalarios <- data.frame(TablaSalarios$FInt,TablaSalarios$Freq,TablaSalarios$Freq.1)
+colnames(TablaSalarios)<-c("INTERVALOS","FEMENINO","MASCULINO") #Filtro para presentación mejor
+
+
+ESTADISTICOS DE TENDENCIA CENTRAL
+#Desviacion estandar, muestral.
+sd(IngresosM)
+
+#Varianza
+sd(IngresosM)^2
+
+#Moda
+
+#Moda para datos discretos
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+#Ux = Quitar repitentes, solo permite dejar uno.
+#Match = hacer que se enumeren cuales filas coinciden con las filas unicas de ux
+#tabulate = tabula esas coincidencias y cuenta la fila que se repitio mas
+#Which.max = Busca cual fila es la que es mayor tenga, finalmente se extrae el valor del vector unico.
+
+ModaM <- Secuencia[1]+(Secuencia[2]-Secuencia[1])*(TablaSalarios$MASCULINO[1])/(TablaSalarios$MASCULINO[1]*2-TablaSalarios$MASCULINO[2]) #Formula
+ModaM
+ModaF <- Secuencia[1]+(Secuencia[2]-Secuencia[1])*(TablaSalarios$FEMENINO[1])/(TablaSalarios$FEMENINO[1]*2-TablaSalarios$FEMENINO[2])
+ModaF
+Mode(EdadM)
+Mode(EdadF)
+ReMo1 = c(ModaM,ModaF)
+ReMo2 = c(Mode(EdadM),Mode(EdadF))
+
+#Media arimetica
+mean(IngresosM)
+
+#Mediana
+median(IngresosM) 
+
+#Cuantiles
+quantile(IngresosM)
+
+#Varianza poblacional y muestral
+varianzaMuestral=var(vectorEdades)
+varianzaMuestral
+desvTipicaMuestral=sd(vectorEdades)
+ 
+varianzaPoblacional=((n-1)/n)*varianzaMuestral
+varianzaPoblacional
+desvTipicaPoblacional=sqrt(varianzaPoblacional)
+desvTipicaPoblacional
+
+#Tablas
+
+TablaSa1 = cbind(ReDes1, ReMo1, ReMed1,ReMedn1) #Todos son datos puntuales que se introducen como vectores
+colnames(TablaSa1) = c("DESVIACION","MODA","MEDIA ","MEDIANA")
+rownames(TablaSa1) = c("MASCULINO","FEMENINO")
+TablaSa1
+
+TablaSa2 = rbind(quantile(IngresosM), quantile(IngresosF))
+colnames(TablaSa2) = c("0%","25%" , "50%", "75%", "100%")
+rownames(TablaSa2) = c("MASCULINO","FEMENINO")
+TablaSa2
+
+VARIABLES INDICATIVAS 
+
+FAfiliado.salud = NULL
+
+for (i in 1:length(Afiliado.salud)){ #Convertir a niveles
+  if(Afiliado.salud[i]=="Si"){
+    FAfiliado.salud = c(FAfiliado.salud,1)
+  }else{
+    FAfiliado.salud = c(FAfiliado.salud,0)
+  }
+}
+
+FAfiliado.salud <- factor(FAfiliado.salud) #Saber que son niveles 1 y 0, y reconozca como variable factor
+levels(FAfiliado.salud)<-c("No afiliado","Afiliado") #Nombres a esas variables 1 y 0
+Faliado.salud<-table(FAfiliado.salud) #Hacer formato table
+barplot(Faliado.salud) #Graficar
+
+
+DIAGRAMA DE TORTA
+pie (x, label = paste (x, "%", sep = " "),main="",clockwise =TRUE,color = c(), legend ("topright, c("Ningun hijo",...),cex = 0.8, fill = color))
+#X Vector o tabla filtrada
+#paste pasar caracteresa a vectores, sep es separacion y x es la misma variable
+#Clock wise = manesillas del relok
+#Legend = Ubicacion, nombres, fill son colores iguales a los del diagrama, cex es tamaño de la letra, 
+
+Ojo: Medidas de tendencia central
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Bucles
+
+while ( condicion logica)  { expresiones a ejecutar }
+for (i in listadevalores)  { secuencia de comandos }
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+P valor
+Es la probabilidad que se den los casos extremos donde la hipotesis nula es cierta, si el valor p es mayor al alpha, quiere decir que es probable y no se debe
+rechazar
+alpha==nivel de significancia
+TIPO 1= RECHAZARLO CUANDO ES CIERTO Ho (controlado por el nivel de significancia)
+TIPO 2= ACEPTAR LA H0 CUANDO ES FALSA (controlado por el tamaño de la muestra N)
+
+mean(abs(x)>obs) #Cuenta la cantidad y luego divide por la cantidad
+El alpha es la probabilidad de excedencia.
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Power, detectar error tipo 2 y tamaño de la muestra
+
+N <- 12
+alpha <- 0.05
+B <- 2000
+reject <- function(N, alpha=0.05){
+   hf <- sample(hfPopulation,N) 
+   control <- sample(controlPopulation,N)
+   pval <- t.test(hf,control)$p.value
+   pval < alpha
+}
+rejections <- replicate(B,reject(N))
+mean(rejections) #Probabilidad tipo 2
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Creación funciones
+nombre = function(argumento1 , argumento2, .....)   {comandos
+   return(variable a retornar)}
+
+sapply(f1,f2) #aplicar f2 a cada elemento del f1
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+IF 
+
+if ( test_expression1) {
+statement1
+} else if ( test_expression2) {
+statement2
+} else if ( test_expression3) {
+statement3
+} else {
+statement4
+}
+#Fourier
+library(TSA) 
+periodogram(x) 
+abline(h=0)
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sumar una cdf y fdp
+prop=function(q){
+	mean(x<=q)} #Parte en el cual se suma y se saca la probabilidad
+			esto es posible porque es una suma de los trues
+qs = seq(from=min(x), to=max(x), length=20) #Organiza los datos en cuantiles
+
+props=sapply(qs,prop)
+
+plot(qs, props)
+
+props = sapply(qs, function(q) mean(x <= q)) #alternativo
+
+
+#fdp
+prop2=function(q){  #Se deja libre como q, para los cuantiles que se requieran 
+  mean(datos<=(q+7.3769) & datos>=(q-7.3769) )} #Se maneja de forma que tenga un ancho apreciable del pdf
+qs2=seq(from=min(datos),to=max(datos),length=20)
+qs2 
+props2=sapply(qs2,prop2) 
+plot(qs2, props2,type="b",main="FDP-CAUDALES MARINILLA")
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+KERNEL
+
+density(x, bw = "nrd0", adjust = 1,  
+        kernel = c("gaussian", "epanechnikov", "rectangular",
+                   "triangular", "biweight",
+                   "cosine", "optcosine"),
+        weights = NULL, window = kernel, width,
+        give.Rkern = FALSE,
+        n = 512, from, to, cut = 3, na.rm = FALSE, ...)
+
+x: datos
+bw=el ancho de banda, por defecto es la desviación estandar, se puede ajustar o dejar sin este argumento y lo ajusta solo
+kernel = el nucleo, se puede escoger uno, o poner a que escoga uno, o no poner nada para que sea el gausiano
+window  = kernel
+cut =  cortar valores extremos
+na.rm = TRUE si faltan valores ,Y false si no faltan
+ 
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estadisticos
+popsd (x, na.rm = FALSE) #Necesita libreria Rafalib, es la desviacion estandar de la población
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Montecarlo
+
+#Grafica varias cosas a la vez
+for(N in Ns){
+  ts <- replicate(B,{
+    x <- rnorm(N)
+    y <- rnorm(N)
+    t.test(x,y, var.equal = TRUE)$stat
+  })
+  ps <- seq(1/(B+1),1-1/(B+1),len=B)
+  qqplot(qt(ps,df=2*N-2),ts,main=N,
+         xlab="Theoretical",ylab="Observed",
+         xlim=LIM, ylim=LIM)
+  abline(0,1)
+}  
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Normalización y distribucion t
+
+z=(X-media)/Sx #Estas proporciones ayudan a normalizar cualquier curva a la normal.
+                además no toca pensar en las unidades que estas conllevan
+mypar(x,y) #Graficas a plotear en un mismo cuadro, esto son las filas y las columnas
+
+
+t.test() #Prueba de t (observar si sigue distribución t), las variables que se anexan alli son los vectores de datos a comparar (diferencia de medias o media)
+ptest(q,df=15) #Probabilidad t con grados de libertad y cuantiles
+qt()
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#ESTADISTICA EXPLORATORIA
+
+Su uso se remite a la familiarización de los datos, para verificar y tener cuidado con las hipotesis.
+
+
+hist(x,breaks=seq(floor(min(x),ceiling(max(x))),main="itutlo",xlab="Nombre de la variable")
+
+quantile(x,seq(0.01,0.99,0.01))
+
+boxplot(x,ylab="",ylim=c(0,400))
+boxplot(split(y,round(x))) # Observa un tipo de tendencia para dos variables
+meadian(x)
+
+plot(x,y, xlab="Father's height in inches", ylab="Son's height in inches", 
+     main=paste("correlation =",signif(cor(x,y),2))) #Manera natural de comparar dos variables
+plot( ChickWeight$Time, ChickWeight$weight, col=ChickWeight$Diet)
+
+cor(males$age,males$time)
+
+#Precision en las tablas
+
+DATOS ATIPICOS ADVIERTEN IMPRECISIÓN EN MODELOS DE REGRESIÓN LINEAL
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+REGRESIONES
+
+
+#ANOVA Y PARAMETROS
+Sumary para parametros y R2
+ANOVA para observar la significancia de la regresion
+
+# Test de carencia de ajuste (Este se realiza con varios niveles en una misma observacion)
+Modelo 2 mod.aux2=lm(log(tiempo)~as.factor(log(kg))) 
+anova(modelo2,mod.aux2)
+
+# RESPUESTA MEDIA ESTIMADA EN X= 60, X=85 y X=110 
+predict(modelo2,newdata=data.frame(kg=c(60,85,110)),se.fit=T)
+
+
+#Correlacion
+cor(Pv$Pv,St$St)
+
+#VARIANZA, NO NORMALIDAD
+Cambiar variables a logartimicas o exponenciales, esto captura mejor los datos y disminuye la varianza
+que es el problema originalmente
+
+#RESIDUALES
+plot(fitted(Modelo_1),residuals(Modelo_1),
+     ylab = "Satelite", xlab = "Residuales", main = "Residuales vs Ajustados")
+abline(h = 0 , lty = 2 , col = 2)
+abline(h = c( 2*sd(fitted(Modelo_1)) , -2*sd(fitted(Modelo_1)) ) , lty = 2 , col = 2)
+
+
+plot(Pv$Pv,residuals(Modelo_1),
+     ylab = "Pivote", xlab = "Residuales", main = "Residuales vs X")
+abline(h = 0 , lty = 2 , col = 2)
+abline(h = c( 2*sd(na.omit(Pv$Pv)) , -2*sd(na.omit(Pv$Pv)) ) , lty = 2 , col = 2)
+
+
+
+
+#VALORES EXTREMOS
+Analizar y comprobar si son reales, si no eliminar aquello a más de 2 desviaciones estandar
+
+#R2
+r2 <- ANOVA$`Sum Sq`[1]/sum(ANOVA$`Sum Sq`) #Explicacion de la varianza de la regresion con respecto a la varianza de todas las observaciones
+
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+FOURIER
+x = diff(ts(select(dat_p1,SUPERFICIE))) #Serie de tiempo diferenciada, para solo observar la estacionalidad
+#Calculando el periodograma como en Shumway & Stoffer "Time Series Analysis and Its Applications" 
+n=length(x) 
+I = abs(fft(x)/sqrt(n))^2 #FFT es la transformación de fourier rapida
+#Calculnado el periodograma escalado 
+P = (4/n)*I #Hallar periodos por la fourier rapida
+freq = (0:(n-1))/n #Frecuencia posibles en la serie de tiempo
+
+#Grafica periodograma escalado 
+plot(freq,P,type="l") #Ploteo para ver las frecuencias, tener en cuenta que de esta forma hay una reflexión por la mitad
+			#por lo que son multiplos de las primeras
+
+#Serie de tiempo para periodograma
+
+x = (ts(select(dat_p1,SUPERFICIE))) #Hallo serie de tiempo
+
+periodogram(x) #Primer metodo con las librerias TSA
+abline(h=0)
+
+#Proceso para las frecuencias
+f = j / s 
+s = datos mensuales (12) , trimestrales (4) .
+f = leida en el diagrama
+j = s*f
+
+#Inversa
+
+Filtrado_1 <- filter(Filtrado, Filtrado$freq>=0.07880 & Filtrado$freq<=0.080)
+P1<-Filtrado_1$P_filtrado
+InvFourier1<-fft(P1, inverse=TRUE)/length(P1)
+plot(1:length(InvFourier1),InvFourier1,type="l",xlab = "",ylab = "")
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+FUNCIONES ::::
+# Funcion para calcular Cn
+crit.inf.resid=function(residuales,n.par,AIC="TRUE"){
+if(AIC=="TRUE"){
+#Calcula AIC
+CI=log(mean(residuales^2))+2*n.par/length(residuales)
+}
+if(AIC=="FALSE"){
+#Calcula BIC
+CI=log(mean(residuales^2))+n.par*log(length(residuales))/length(residuales)
+}
+CI
+}
+# Funcion para calcular la amplitud de los I.P
+amplitud=function(LIP,LSP){
+a=LSP-LIP
+am=mean(a)
+am
+}
+# Funcion para calcular la cobertura de los I.P
+cobertura=function(real,LIP,LSP){
+I=ifelse(real>=LIP & real<=LSP,1,0)
+p=mean(I)
+p
+}
+factoresdeltai=function(descom,s,estacionini){
+if(estacionini==1){
+deltasi=descom$figure
+}
+if(estacionini!=1){
+j=estacionini;deltasi=c(descom$figure[(s-j+2):s],descom$figure[1:(s-j+1)])
+}
+deltasi
+}
+
+#DEFINIENDO FUNCIÓN USUARIO PARA TEST DURBIN-WATSON
+pruebaDW1=function(modelo){
+dwneg=durbinWatsonTest(modelo,max.lag=1,method="normal",
+alternative="negative")
+dwpos=durbinWatsonTest(modelo,max.lag=1,method="normal",
+alternative="positive")
+res=data.frame(1,dwneg$r,dwneg$dw,dwpos$p,dwneg$p)
+names(res)=c("lag","rho estimado","Estadístico D-W",
+"VP rho>0","VP rho<0")
+res
+}
+
+#DEFINIENDO FUNCIÓN USUARIO PARA TESTES BOX-PIERCE Y LJUNG-BOX
+BP.LB.test=function(serie,maxlag,type="Box"){
+aux=floor(maxlag/6); X.squared=c(rep(NA,aux))
+df=c(rep(NA,aux)); p.value=c(rep(NA,aux))
+for(i in 1:aux){
+test=Box.test(serie,lag=(6*i),type=type)
+X.squared[i]=test[[1]]; df[i]=test[[2]]
+p.value[i]=test[[3]]
+}
+lag=6*c(1:aux)
+teste=as.data.frame(cbind(X.squared,df,p.value))
+rownames(teste)=lag; teste
+}
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Tabla
+
+Real=c(ytf)
+Predecido=c(predmodelo1[,1])
+Tabla= cbind(Real, Predecido)
+colnames(Tabla) = c("Real","Predecido")
+rownames(Tabla) = c("Jun-2016","Jul-2016","Aug-2016","Sep-2016","Oct-2016","Nov-2016",
+"Dec-2016","Ene-2017","Feb-2017","Mar-2017","Abr-2017","May-2017")
+Tabla
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+win.graph() # retiene gráficos
+
+win.graph(height=7,width=14)#Retiene graficos 2x2
+layout(rbind(c(1,2),c(3,4)))
+win.graph(height=7,width=14)#Retiene graficos 1x2
+layout(rbind(c(1,2)))
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DATOS Y SERIES DE TIEMPO
+datos=data.frame(scan(what=list(Valor.Catastro=0,Precio.Venta=0,Zona="")))
+#Siempre despues de los datos separados por un espacio y luego leer una linea en blanco para leer todas los datos
+plot(x1,x2,pch=as.numeric(Zona),xlab="Valor catastral propiedad (X)",ylab="Precio de venta propiedad (Y)",cex=2.5)
+legend("topleft",legend=c("Zona A","Zona B","Zona C"),pch=c(1:3),cex=2)
+
+Modelo regresión multinivel
+modelo1=lm(Precio.Venta~Valor.Catastro+Zona) o modelo1=lm(Precio.Venta~Valor.Catastro*Zona)
+summary(modelo1)
+confint(modelo1)
+
+#dos MANERAS una leyendo Y PLOT
+datos=scan(file.chose(),skip=numero_de_filas,dec='.' ò ',') el ultimo se debe elegir por el ó
+Datos14=read.table(file.choose(),header=T,sep=";",skip=8,dec=",",colClasses=c(rep("NULL",17),"numeric"))#EL header T es el titulo de los datos de excel
+Datos14=ts(Datos14,freq=12,start=c(2003,1))
+plot(Datos14,main="Componente estacional")
+#para elegir datos por columnas
+x1=datos[,filai]
+Objeto de series de tiempo
+datosst=ts(datos,freq=6 3 12,star=c(año,mes(expresado en numero del mes)
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DESCOMPOSICIÓN:
+descom=decompose(log(Datosn14),type="additive")
+St=descom$seasonal
+BOXPLOT Y PERIODOGRAMA
+boxplot(log(Datosn14)~cycle(log(Datosn14)),names=c("ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"))
+
+x=diff((log(Datosn14)))# Periodograma
+periodogram(x);
+abline(h=0)
+abline(v=c(1:6)/12,col=2,lty=2)
+
+MESES COMO OBJETO PARA MODELAR COMPONENTE ESTACIONAL
+Yt2=ts(DATOS)
+Meses=relevel(season(DATOS),ref="December")
+Mensual=seasonaldummy(DATOS)
+Q1=Mensual[,1]
+Q2=Mensual[,2]
+Q3=Mensual[,3]
+Q4=Mensual[,4]
+Q5=Mensual[,5]
+Q6=Mensual[,6]
+Q7=Mensual[,7]
+Q8=Mensual[,8]
+Q9=Mensual[,9]
+Q10=Mensual[,10]
+Q11=Mensual[,11]
+
+MODELOS:
+Modelo1=lm(Yt2~Tnuevo+I(Tnuevo^2) + Meses)
+summary(Modelo1)
+#ojo: con el objeto que debe permanecer como fitted para poder hacer el modelo ajustado
+Modelo1aj=ts(exp(fitted(Modelo1))*exp(summary(Modelo1)$sigma^2/2),frequency=12,start=c(2003,1))#SE EXTRAE EL SIGMA PARA EL MODELO QUE SE DISTRIBUYE DE MANER LOG NORMAL
+PARAMETROS Y NIVELES DE CONFIANZA
+confint(object, parm, level = 0.95, ...)
+object=fitted model, si se usa solo esto toma un alpha de 0,25
+
+GRAFICAS:
+layout(cbind(c(1,2),c(3,4))) PARA COMPARTIR graficos
+
+plot(Ytpronostico,main="Serie real y pronostico\nAjuste por Suavizamiento Holt-Winters")#Para graficar y poner el titulo
+lines(Ytpron10,col=2)#Para superponer dos graficas en una, el truco es el col=#
+lines(Ytpron3,col=3)
+legend("topleft",legend=c("Original","Holt-Winters","Log-cubico"),col=c(1,2,3),lty=1)#Para la legenda
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+PERIODOS
+
+#Deltas
+library(TSA) 
+cervezaUSA=ts(scan(),freq=4,start=c(1975,1))
+36.14 44.6 44.15 35.72 36.19 44.63 46.95 36.90 
+39.66 49.72 44.49 36.54 41.44 49.07 48.98 39.59 
+44.29 50.09 48.42 41.39 46.11 53.44 53.0 42.52 
+44.61 55.18 52.24 41.66 47.84 54.27 52.31 42.03 
+
+
+#Ajuste con todos los datos 
+t=1:length(cervezaUSA) 
+ #Indicadoras para el ajuste 
+trim=seasonaldummy(cervezaUSA)  
+I1=trim[,1] 
+I2=trim[,2] 
+I3=trim[,3] 
+
+modlineal=lm(cervezaUSA~t+I1+I2+I3) summary(modlineal) 
+#pronóstico para m=4 periodos fuera de la muestra
+m=4 
+tnuevo=(length(cervezaUSA)+1):(length(cervezaUSA)+m) 
+#Valores de las indicadoras en los pronósticos 
+trimnuevo=seasonaldummy(cervezaUSA,h=m) #Note uso del argumento h= 
+
+I1nuevo=trimnuevo[,1] 
+I2nuevo=trimnuevo[,2] 
+I3nuevo=trimnuevo[,3] 
+
+#Los pronósticos y los I.P del 95% para los m períodos fuera de la muestra total 
+pron=predict(modlineal,newdata=data.frame(t=tnuevo,I1=I1nuevo,I2=I2nuevo,I3=I3nuevo), 
+		interval="prediction",level=0.95) 
+pron=ts(pron,freq=4,start=c(1983,1)) 
+pron 
+
+#Senos y Cosenos
+cervezaUSA=ts(scan(),freq=4,start=c(1975,1)) 
+36.14 44.6 44.15 35.72 36.19 44.63 46.95 36.90 39.66
+49.72 44.49 36.54 41.44 49.07 48.98 39.59 44.29 50.09 
+48.42 41.39 46.11 53.44 53.0 42.52 44.61 55.18 52.24 
+41.66 47.84 54.27 52.31 42.03 
+ 
+#Ajuste con todos los datos 
+t=1:length(cervezaUSA) 
+#Funciones trigonométricas 
+sen1=sin(pi*t/2) 
+cos1=cos(pi*t/2) 
+cos2=cos(pi*t) 
+ 
+modlineal=lm(cervezaUSA~t+sen1+cos1+cos2) 
+summary(modlineal) 
+
+#pronóstico para m=4 periodos fuera de la muestra 
+m=4 
+tnuevo=(length(cervezaUSA)+1):(length(cervezaUSA)+m) 
+ 
+#Valores de las funciones trigonométricas para los períodos a pronosticar 
+sen1nuevo=sin(pi*tnuevo/2) 
+cos1nuevo=cos(pi*tnuevo/2) 
+cos2nuevo=cos(pi*tnuevo) 
+ 
+#Los pronósticos y los I.P del 95% para los m períodos fuera de la muestra total 
+pron=predict(modlineal,newdata=data.frame(t=tnuevo,sen1=sen1nuevo,cos1=cos1nuevo, cos2=cos2nuevo),
+interval="prediction",level=0.95) 
+pron=ts(pron,freq=4,start=c(1983,1)) 
+pron 
+
+NOTAS: s=12 (mensual) u otros s=5
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+RESIDUALES
+
+residuals(modelolineal) #Residuales
+
+plot.ts(residuals(modelo1),main="")
+abline(h=0,col=2)
+abline(h=c(-2*summary(Modelo1)$sigma,2*summary(Modelo1)$sigma),col=2)#para controlar eje y
+plot(fitted(modelo1),residuals(modelo1))
+abline(h=0,col=2)
+
+Shapiro
+testA=shapiro.test(residuals(modeloA))
+testA
+qqnorm(residuals(modeloA), main="Prueba de normalidad de residuales de modelo componente Agricultura")
+qqline(residuals(modeloA))
+legend("topleft", legend=rbind(names(testA),testA), cex=0.8)
+
+#Graficando densidad de los residuales: Semejanza con la función normal
+plot(density(residuals(modeloA)))
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Predicciones
+Tpronostico=c((n+1):(n+m))#la clave es aquí, marcar tiempo distinto
+Meses.nuevo=season(Datos14)[(n+1):(length(Datos14))]
+Mesnuevo=seasonaldummy(Datosn14,h=m) 
+Q1nuevo=Mesnuevo[,1]
+Q2nuevo=Mesnuevo[,2]
+Q3nuevo=Mesnuevo[,3]
+Q4nuevo=Mesnuevo[,4]
+Q5nuevo=Mesnuevo[,5]
+Q6nuevo=Mesnuevo[,6]
+Q7nuevo=Mesnuevo[,7]
+Q8nuevo=Mesnuevo[,8]
+Q9nuevo=Mesnuevo[,9]
+Q10nuevo=Mesnuevo[,10]
+Q11nuevo=Mesnuevo[,11]
+Ytpronostico=ts(Datos[Tpronostico],frequency=12,start=c(año pronostico,1))
+
+#ojo a predict, modelo, el tpronostico y ya el resto es según el modelo
+Predicciones1=exp(predict(Modelo1,data.frame(Tnuevo=Tpronostico,Meses=Meses.nuevo),
+interval="prediction"))*exp(summary(Modelo1)$sigma^2/2)
+Predicciones1=ts(Predicciones1,frequency=12,start=c(2016,1))
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+AIC Y BIC
+resmod1.orig=Datosn14-Modelo1aj#Definir objeto residuales
+AIC1=exp(crit.inf.resid(resmod1.orig,n.par=#numeros de parametros))
+BIC1=exp(crit.inf.resid(resmod1.orig,n.par=n.par,AIC="FALSE"))
+#Presentarlo en un tabla
+AICS=c(AIC1,AIC2,AIC3,AIC4,AIC5)
+BICS=c(BIC1,BIC2,BIC3,BIC4,BIC5)
+Criterios = rbind(AICS, BICS)
+colnames(Criterios) = c("Log-lineal","Log-cuadrático","Log-cúbico","Exp-lineal","Exp-cuadratico")
+rownames(Criterios) = c("AIC","BIC")
+Criterios
+
+#RMSE MAPE Y DEMÁS#
+Acc1=accuracy(PREDICCION PERO EN OBJETO SERIE DE TIEMPO,SERIE DE TIEMPO ORIGINAL PERO CORREGIDA O NO, ADEMÁS RECORTADA EN TIEMPOS PRONOSTICO) 
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+AJUSTE LOCAL:
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+1.ESTACIONALIDAD:
+# Descomposición multiplicativa de los primeros n datos
+descom=decompose(Datos,type="multiplicative O ADDITIVE")
+St=descom$seasonal
+plot(St, main="Componente estacional estimada\ncon el filtro de descomposición multiplicativa")
+# Extrayendo las estimaciones de los factores estacionales calculados con el filtro de la descomposición
+s=12 (O 3 4)
+deltas_i=factoresdeltai(descom=descom,s=12,estacionini=1) #valor estimado de los s=12 factores estacionales
+data.frame(deltas_i)
+# Cálculo de los pronósticos de la componente estacional
+i=c(1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5) 
+Stnuevo=Stnuevo=deltas_i[i] 
+Stnuevo=ts(Stnuevo,frequency=12,start=c(2016,1)) 
+Yt.adj=Datosn14/St aquí varia si es resta o división, dependiendo del tipo de serie que es
+2.Loess
+#Ojo con lo del criterio, familia tiene que ser gaussiana siemre, yt adj es el desestacionalizado
+aLoess6=loess.as(Tnuevo,Yt.adj,degree=1,criterion="gcv",family="gaussian",plot=F)
+summary(aLoess6)
+Tt6=ts(fitted(aLoess6),frequency=12,start=c(2003,1))
+alfa.optim6=aLoess6$pars$span 
+3.Ajuste con desestacionalidad
+plot(Yt.adj,main="Serie desestacionalizada y su ajuste LOESS lineal óptimo\nCriterio GCV")
+lines(Tt6,col=2)
+legend("topleft",legend=c("Serie ajustada estacionalmente","Tendencia LOESS lineal"),col=c(1,2),lty=1)
+
+4.Finalmente
+# Ajuste final de la serie según modelo multiplicativo
+Yaj6=Tt6*St
+plot(Datosn14,main="Serie real y su ajuste\npor descomposición & LOESS lineal\n Criterio GVC")
+lines(Yaj6,col=2)
+legend("topleft",legend=c("Original","Ajustada"),col=c(1,2),lty=1)
+ylim=c(min(-2*sqrt(MSE6),Et6),max(2*sqrt(MSE6),Et6))
+5. Estadisticos finales
+GL6(grados libertad)= n-(round(aLoess6$enp)+s-1) 
+MSE6=sum(Et6^2)/GL6 
+Parametros=n-Gl6
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Ojo con el alfa optimo, el Tnuevo, degree=grado de ajuste y el ytadj
+Ttnuevo6=predict(loess(Yt.adj~Tnuevo,span=alfa.optim6,degree=1,control=loess.control(surface="direct")),
+data.frame(Tnuevo=Tpronostico))
+Ttnuevo6=ts(Ttnuevo6,freq=12,start=c(2016,1))
+# Pronóstico de la serie según modelo multiplicativo
+# Combinación de la descomposición y loess lineal
+Ytpron6=Ttnuevo6*Stnuevo
+#Ojo con st nuevo, es la estacionalidad con los factores delta i
+#tabla de yt, tendencia y estacionalidad
+tablapron6=cbind(Pron_Tt=Ttnuevo6,Pron_St=Stnuevo,Pron_serie=Ytpron6) 
+tablapron6
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+HOLT-WINTERS
+suav=HoltWinters(Datosn14,gamma=0.3,seasonal="multiplicative")
+suav
+df10=n-2*s-((s-1)+2)
+P10=(s-1)+2
+# Pronosticos I.P del 95% del suavizamiento
+Pron10=predict(suav, n.ahead=12,prediction=T,level=0.95)#Pronostico con intervalos de confianza
+Ytpron10=Pron10[,1] 
+# Calculando medidas de precision de pronosticos puntuales
+Acc10=accuracy(Ytpron10,Ytpronostico)
+# Precision pronosticos por I.P en Holt- Winters
+Amp10=amplitud(LIP=Pron10[,3],LSP=Pron10[,2])
+Cob10=cobertura(real=Ytpronostico,LIP=Pron10[,3],LSP=Pron10[,2])
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estabilidad
+# Estabilidad
+
+# Modelo elegido
+SERIE=ts(Datos,freq=12,start=c(2003,1))
+tt=1:length(SERIE)
+
+Meses=relevel(season(SERIE),ref="December")
+Mensual=seasonaldummy(SERIE)
+P1=Mensual[,1]
+P2=Mensual[,2]
+P3=Mensual[,3]
+P4=Mensual[,4]
+P5=Mensual[,5]
+P6=Mensual[,6]
+P7=Mensual[,7]
+P8=Mensual[,8]
+P9=Mensual[,9]
+P10=Mensual[,10]
+P11=Mensual[,11]
+
+
+Modelo3=lm(SERIE~(tt)+I((tt)^2)+I((tt)^3)+Meses)
+summary(Modelo3)
+
+
+# Creando funcion para estimar recursivamente el modelo
+#OJO con lm, k y el p
+estim=function(n){
+modwin=lm(lft[1:n]~tt[1:n]+I(tt^2)[1:n]+I(tt^3)[1:n]+Meses[1:n])
+resul1=cbind(coef(modwin),confint(modwin))
+resul1
+}
+K=numero de parametros más uno, definiendo la datos para la recursividad
+p=15
+k=p+1
+n=matrix(k:length(SERIE),ncol=1)
+n
+
+# Realizando las regresiones recursivas. En el arreglo se guardan matrices
+# cada una de 5 filas (se estiman p=5 parámetros) y 3 columnas (estimación, LIC, LSC)
+
+vec=array(apply(n,1,estim),dim=c(p,3,nrow(n)))
+beta0=vec[1,,] 
+beta1=vec[2,,] 
+beta2=vec[3,,]
+beta3=vec[4,,] 
+delta1=vec[5,,]
+delta2=vec[6,,] 
+delta3=vec[7,,] 
+delta4=vec[8,,] 
+delta5=vec[9,,] 
+delta6=vec[10,,]
+delta7=vec[11,,]
+delta8=vec[12,,]
+delta9=vec[13,,]
+delta10=vec[14,,] 
+delta11=vec[15,,] 
+#Ojo con el l tipo, nombre de beta0 o deltai y el modelo
+# Graficando los beta0 y sus I.C del 95%
+matplot(n,t(beta0),type="l",lty=c(1,2,2),col=1,lwd=1.5,ylab=expression(hat(beta)[0]))
+abline(h=coef(Modelo3)[1],lty=1,col=2,lwd=2)
+legend("topright",legend=expression(hat(beta)[0]==4.04),lwd=2,col=2)
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Ojo con el l tipo y el modelo
+#Residuales recursivos
+rr=recresid(SERIE~(tt)+I((tt)^2)+I((tt)^3)+Meses)
+plot(rr, type = "l",ylab="Residuales recursivos",xlab="t")
+abline(h=0,col=2,lwd=2)
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Cusum test
+plot(efp(SERIE~(tt)+I((tt)^2)+I((tt)^3)+Meses,type="Rec-CUSUM"),lwd=2,alpha = 0.05)
+#Test CUSUM recursivo para cambio estructural
+sctest(lft~(tt)+I((tt)^2)+I((tt)^3)+Meses,type="Rec-CUSUM")
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#AFC DE LA SERIE. DOS FORMAS DE CONSTRUIRLA
+acf(as.numeric(cervezaUSA),lag.max=12,ci.type="ma",ci.col=2,col=4)
+#Siempre tipo ma, si son residaules no necesita el as.numeric, el lag.max=m, en el cual m=n/4, el as.numeric es para eliminar
+#las fechas, el type="ma", hace que las bandas de confianza sean variables
+
+pacf(residuals(modlineal),lag.max=12)
+
+#TEST BOX-PIERCE
+BP.LB.test(residuals(modlineal),maxlag=12,type="Box")
+
+#TEST LJUNG-BOX
+BP.LB.test(residuals(modlineal),maxlag=12,type="Ljung")# la diferencia es el el tipo
+
+#TEST DURBIN WATSON DE ORDEN 1
+pruebaDW1(modlineal)#modelo lineal definido como hemos definido
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#EACF, Autoarima, Arma.subsets
+
+eacf(residuals(Modelo1),ar.max=24,ma.max=24) #Ar max es los p, y Ma max son los q
+ars1=armasubsets(residuals(Modelo1), nar=12, nma=12, y.name = "AR", ar.method = "ml")
+plot(ars1)#Modelo1, es el lineal o nolineal, nar es lo mismo al anterior de p y q
+auto.arima(residuals(Modelo1),ic="bic")#bic o aic
+
+#ARIMA Y PRONOSTICOS
+#Matrices para el vector
+t
+t2=t^2;
+t3=t^3
+Tpronostico=recorte 
+X31=cbind(t,t2,t3,Mensual) #matriz de regresión que será usada en modelos de regresión
+Xnuevo1=cbind(t=Tpronostico,t2=Tpronostico2,t3=Tpronostico3,Mensual=Mesnuevo)
+#Modelos ARMA
+Modelo1a=Arima(Yt2,order=c(14,0,0),xreg=X31,method="ML") 
+p11a=15+14
+df1a=n-p11a #n-Total de parámetros 
+coeftest(Modelo1a,df=df1a)
+
+#Pronosticos
+pronos2b=ts(exp(as.data.frame(forecast(Modelo2b,xreg=Xnuevo2,level=95)))*exp(Modelo2b$sigma^2/2),freq=12,start=c(2016,6))
+{plot(Datos14)
+lines(Yhat2b,col=4)
+plot(Yhat2b)
+legend("topleft",legend=c("Original","Ajustada","Pronóstico"),col=c(1,2,3),lty=1)}
+#Modelos ajustados
+
+yhat1a=ts(exp(Modelo1a$fitted)*exp(Modelo1a$sigma^2/2),frequency=12,star=c(2003,1))
+
+#Pronosticos y medidas
+
+#Pronósticos e I.P del 95% Modelo 1a
+pronos1a=ts(exp(as.data.frame(forecast(Modelo1a,xreg=Xnuevo1,level=95)))*exp(Modelo1a$sigma^2/2),freq=12,start=c(2016,6))
+#Precisión pronósticos puntuales
+accuracy(pronos1a[,1],Ytpronostico)
+#Precisión pronósticos por I.P
+amppronos1a=amplitud(LIP=pronos1a[,2],LSP=pronos1a[,3])
+amppronos1a
+cobpronos1a=cobertura(real=Ytpronostico,LIP=pronos1a[,2],LSP=pronos1a[,3])
+cobpronos1a
+
+plot(Ytpronostico,main="Serie real y datos pronosticados")
+  lines(pronos1a[,1],col=2)
+  lines(pronos2a[,1],col=3)
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Diferencias
+dif1l=diff(lnyt)
+dif12=diff(lnyt,12) #Primera diferencia estacional, el primer argumento 
+dif2.12=diff(diff(lnyt,12),1) #Diferencia estacional-regular 
+
+#Hegy
+#Test HEGY de raíces unitarias 
+HEGY.test(wts=lnyt,itsd=c(0,0,c(0)),selectlags=list(mode="bic", Pmax=12))$stats
+
+#modelo con deriva
+modelo1=Arima(lnyt,order=c(1,0,1),seasonal=list(order=c(0,1,1)),include.drift = TRUE,method="ML")
